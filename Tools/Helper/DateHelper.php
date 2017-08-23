@@ -1,5 +1,7 @@
 <?php
 
+use CSite;
+
 /**
  * Хелпер, применяемый при работе с датой и временем
  *
@@ -28,5 +30,21 @@ class DateHelper
         $formattedDateTime = strftime($format, $unixDateTime);
 
         return iconv('windows-1251', 'utf-8', $formattedDateTime);
+    }
+
+    /**
+     * Возвращает текущую дату и время в формате текущего сайта
+     *
+     * @param string $type - Тип формата. Допустимы следующие значения:
+     * FULL - дата и время
+     * SHORT - дата
+     *
+     * @return string
+     */
+    public static function getCurDateTime($type = 'FULL')
+    {
+        global $DB;
+
+        return date($DB->DateFormatToPHP(CSite::GetDateFormat($type)), time());
     }
 }
